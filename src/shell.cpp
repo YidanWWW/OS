@@ -54,6 +54,15 @@ void runShell() {
             } else {
                 copyFile(tokens[1], tokens[2]);
             }
+        } else if (command == "create") {
+              // create file <filename>
+              if (tokens.size() < 3) {
+                  std::cout << "Usage: create file <filename>\n";
+              } else if (tokens[1] == "file") {
+                  createFile(tokens[2]);
+              } else {
+                  std::cout << "Unknown create type. Only 'file' is supported.\n";
+              }
         } else if (command == "exit") {
             break;
         } else {

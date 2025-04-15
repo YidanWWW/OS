@@ -3,6 +3,8 @@
 
 #include <string>
 
+void createFile(const std::string &filepath);
+
 // Lists all files in the given directory.
 void listFiles(const std::string &path);
 

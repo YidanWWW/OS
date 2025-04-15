@@ -1,8 +1,32 @@
 #include "file_ops.h"
 #include <iostream>
+#include <fstream>
 #include <filesystem>
 
 namespace fs = std::filesystem;
+
+// create file：if the path does not exist, it will recursively create directory at first
+void createFile(const std::string &filepath) {
+    fs::path p(filepath);
+    fs::path parent = p.parent_path();
+    if (!parent.empty() && !fs::exists(parent)) {
+        if (fs::create_directories(parent)) {
+            std::cout << "Created missing directories: " << parent.string() << "\n";
+        } else {
+            std::cerr << "Failed to create directories: " << parent.string() << "\n";
+        }
+    } else {
+        std::cout << "Parent directory exists: "
+                  << (parent.empty() ? "(none)" : parent.string()) << "\n";
+    }
+
+    std::ofstream ofs(filepath);
+    if (ofs) {
+        std::cout << "Created file: " << filepath << "\n";
+    } else {
+        std::cerr << "Error creating file: " << filepath << "\n";
+    }
+}
 
 void listFiles(const std::string &path) {
     try {
